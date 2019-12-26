@@ -1,218 +1,236 @@
 import { LitElement, html, css } from "lit-element";
+import "mv-font-awesome";
+import "mv-container";
 
 export class MvTooltip extends LitElement {
   static get properties() {
     return {
-      heading: { type: String },
-      message: { type: String },
-      tipwidth: { type: String },
+      title: { type: String },
       position: { type: String },
-      fireonclick: { type: Boolean },
-      opened: { type: Boolean },
+      clickAble : { type: Boolean },
+      open: { type: Boolean },
+      theme: { type: String, attribute: true },
+      size: { type: String, attribute: true },
+      showCloseButton: { type: Boolean }
     };
   }
 
-  constructor() {
-    super();
-    this.position = 'top';
-  }
-
   static styles = css`
+    :host {
+      font-family: var(--font-family, Arial);
+      font-size: var(--font-size-m, 10pt);
+    }
+      
     .tooltip {
       position: relative;
       z-index: unset;
       display: inline-block;
     }
 
-    .tooltip__container {
+    .mv-tooltip-container {
       color: while;
       line-height: 2;
       display: none;
       position: absolute;
       z-index: 9999;
+      cursor: context-menu;
+      width: var(--mv-tooltip-width, 93px);
+      min-height: var(--mv-tooltip-height, 39px);
+      box-shadow: 0 0px 25px 5px rgba(205,210,214,0.8);
+      border-radius: 5px;
     }
     
-    .tooltip__container--bottom {
-      top: calc(100% + 2rem);
+    .mv-tooltip-container::after {
+      content: "";
+      height: 10px;
+      position: absolute;
+      transform: rotate(45deg);
+      width: 10px;
+      background: var(--mv-tooltip-background, #363F4C);
+      box-shadow: 0 0px 25px 5px rgba(205,210,214,0.8);
+    }
+    
+    .tooltip-popup {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      border-radius: 5px;
+      background: var(--mv-tooltip-background, #363F4C);
+      color:var(--mv-tooltip-color, #FFFFFF);
+      min-height: var(--mv-tooltip-height, 39px);
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+    
+    .mv-tooltip-container-bottom {
+      top: calc(100% + 16px);
       left: 50%;
       transform: translateX(-50%);
-
-      animation: 
-        tooltip-fade 1s,
-        tooltip-slide-bottom 0.5s ease;
     }
 
-    .tooltip__container--bottom::before {
-      top: 0;
+    .mv-tooltip-container-bottom::after {
+      top: -5px;
       left: 50%;
-      z-index: 1;
-      transform: rotate(45deg) translateX(-50%);
+      margin-left: -5px;
     }
 
-    .tooltip__container--top {
-      bottom: calc(100% + 3rem);
+    .mv-tooltip-container-top {
+      bottom: calc(100% + 16px);
       left: 50%;
       transform: translateX(-50%);
-
-      animation: 
-        tooltip-fade 1s,
-        tooltip-slide-top 0.5s ease;
     }
 
-    .tooltip__container--top::before {
-      top: auto;
-      bottom: -2rem;
+    .mv-tooltip-container-top::after {
+      bottom: -5px;
       left: 50%;
-      z-index: 3;
-      transform: rotate(45deg) translateX(-50%);
+      margin-left: -5px;
     }
 
-    .tooltip__container--left {
-      right: calc(100% + 3rem);
+    .mv-tooltip-container-left {
+      right: calc(100% + 24px);
       top: 50%;
       transform: translateY(-50%);
-
-      animation:
-        tooltip-fade 1s,
-        tooltip-slide-left 0.5s ease;
     }
 
-    .tooltip__container--left::before {
-      right: -2rem;
+    .mv-tooltip-container-left::after {
+      right: -5px;
+      margin-top: -5px;
       top: 50%;
-      z-index: 3;
-      transform: rotate(-45deg) translateY(-50%);
     }
 
-    .tooltip__container--right {
-      left: calc(100% + 3rem);
+    .mv-tooltip-container-right {
+      left: calc(100% + 24px);
       top: 50%;
       transform: translateY(-50%);
-
-      animation:
-        tooltip-fade 1s,
-        tooltip-slide-right 0.5s ease;
     }
 
-    .tooltip__container--right::before {
-      left: 0;
+    .mv-tooltip-container-right::after {
+      left: -5px;
+      margin-top: -5px;
       top: 50%;
-      transform: rotate(-45deg) translateY(-50%);
     }
 
-    .tooltip__trigger {
+    .tooltip-trigger {
       display: inline-block;
       position: relative;
       z-index: 1;
     }
 
-    .tooltip__popup {
-      text-align: center;
-      padding: 1rem;
-      position: relative;
-      z-index: 2;
-      background: #757575;
-      box-shadow: 5px 5px 6px 0px rgba(50,50,50,0.25);
-      color:#ffff;
-      border-radius: 5px;
+    .tooltip-title {
+      font-size: var(--mv-tooltip-title-font-size, 20px);
+      color:var(--mv-tooltip-color, #FFFFFF);
+      font-weight: 500;
     }
 
-    .tooltip__heading {
-      font-size: 1.25rem;
-      text-align: left;
-    }
-
-    .tooltip__message {
-      text-align: left;
-      margin-bottom: 2rem;
-    }
-
-    .tooltip__close {
-      text-decoration: underline;
-      color: aliceblue;
-      cursor: pointer;
-      border: 0;
-      position: absolute;
-      bottom: 1rem;
-      left: 50%;
-      z-index: 4;
-      background: transparent;
-      transform: translateX(-50%);
-    }
-
-    .tooltip--active .tooltip__container {
+    .tooltip-actived .mv-tooltip-container {
       display: block;
     }
-
-    @keyframes tooltip-fade {
-      from {opacity: 0}
-      to {opacity: 1}
+    
+    mv-fa {
+      position: absolute;
+      right: 0px;
+      top: -9px;
+      font-size: 15px;
+      color:var(--mv-tooltip-color, #FFFFFF);
+      cursor: pointer;
     }
-
-    @keyframes tooltip-slide-bottom {
-      from { top: 100% }
-      to { top: calc(100% + 2rem) }
+    
+    .mv-tooltip-container.light::after {
+      background: #FFFFFF;
     }
-
-    @keyframes tooltip-slide-top {
-      from { bottom: 100% }
-      to { bottom: calc(100% + 3rem) }
+    
+    .mv-tooltip-container.light > .tooltip-popup {
+      background: #FFFFFF;
+      color:#363F4C;
     }
-
-    @keyframes tooltip-slide-left {
-      from { right: 100% }
-      to { right: calc(100% + 3rem) }
+    
+    span > ::slotted(*) { 
+      cursor: pointer;
     }
-
-    @keyframes tooltip-slide-right {
-      from { left: 100% }
-      to { left: calc(100% + 3rem) }
+    
+    .mv-tooltip-container.large {
+      width: 163px;
+      min-height: 46px;
+    }
+    
+    .mv-tooltip-container.large > .tooltip-popup {
+      min-height: 46px;
+    }
+    
+    .mv-tooltip-container.light mv-fa {
+      color:#363F4C;
     }
  `;
 
+  constructor() {
+    super();
+    this.position = 'bottom';
+    this.open = false;
+    this.theme = "dark";
+    this.size = "small";
+    this.title = null;
+    this.showCloseButton = false;
+  }
+
   render() {
-    const containerStyles = `min-width: ${this.tipwidth}px;`;
-
-    const closeBtn = this.fireonclick
-      ? html `<a class="tooltip__close" @click="${this.hideTooltip}">Close</a>`
-      : html ``;
-
-    const handleHideTooltip = !this.fireonclick ? this.hideTooltip : '';
-    const activedTooltipClass = this.opened ? 'tooltip--active' : '';
-
+    const open = this.open ? 'tooltip tooltip-actived' : 'tooltip';
     return html`
-      <div class="tooltip ${activedTooltipClass}">
-        <div class="tooltip__container tooltip__container--${this.position}" style="${containerStyles}">
-          <div class="tooltip__popup">
-            <header class="tooltip__heading">${this.heading}</header>
-            <p class="tooltip__message">${this.message}</p>
+      <span class="${open}">
+        <div class="mv-tooltip-container mv-tooltip-container-${this.position} ${this.theme} ${this.size}">
+          <div class="tooltip-popup">
+          ${this.clickAble && this.showCloseButton
+            ? html`<mv-fa icon="window-close" @click="${this.hideTooltip}"></mv-fa>`
+            : html``}
+          ${this.title
+            ? html`<div class="tooltip-title">${this.title}</div>`
+            : html``}
+            <slot name="tooltip-content"></slot>
           </div>
-          ${closeBtn}
         </div>
-        <div 
-          class="tooltip__trigger"
+        <span 
+          class="tooltip-trigger"
           @mouseover="${this.showTooltip}"
-          @mouseout="${handleHideTooltip}"
-          @click="${this.toggleTooltip}">
+          @mouseout="${!this.clickAble ? this.hideTooltip : null}"
+          @click="${this.toggleTooltip}"
+          >
           <slot></slot>
-        </div>
-      </div>
+        </span>
+      </span>
     `;
   }
 
+  connectedCallback() {
+    document.addEventListener("click", this.handleClickTooltip);
+    super.connectedCallback();
+  }
+
+  detachedCallback() {
+    document.removeEventListener("click", this.handleClickTooltip);
+    super.detachedCallback();
+  }
+
+  handleClickTooltip = event => {
+    const { path } = event;
+    const clickedTooltip = !(path || []).some(node => node === this);
+    if (clickedTooltip) {
+      this.open = false;
+    }
+  };
+
   hideTooltip() {
-    this.opened = false;
+    this.open = false;
   }
 
   showTooltip() {
-    if (!this.fireonclick) {
-      this.opened = true;
+    if (!this.clickAble) {
+      this.open = true;
     }
   }
 
   toggleTooltip() {
-    if (this.fireonclick) {
-      this.opened = !this.opened;
+    if (this.clickAble) {
+      this.open = !this.open;
     }
   }
 }
