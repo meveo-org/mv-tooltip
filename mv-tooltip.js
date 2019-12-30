@@ -6,12 +6,21 @@ export class MvTooltip extends LitElement {
   static get properties() {
     return {
       title: { type: String },
+
+      //  valid position values are: "top", "right, "left"
+      //    default: "bottom"
       position: { type: String },
-      clickAble : { type: Boolean },
+      clickable : { type: Boolean },
       open: { type: Boolean },
+
+      //  valid theme values are: "light"
+      //    default: "dark"
       theme: { type: String, attribute: true },
+
+      //  valid size values are: "large"
+      //    default: "small"
       size: { type: String, attribute: true },
-      showCloseButton: { type: Boolean }
+      closeable: { type: Boolean }
     };
   }
 
@@ -28,16 +37,20 @@ export class MvTooltip extends LitElement {
     }
 
     .mv-tooltip-container {
-      color: while;
-      line-height: 2;
+      color: #FFFFFF;
       display: none;
       position: absolute;
       z-index: 9999;
       cursor: context-menu;
-      width: var(--mv-tooltip-width, 93px);
+      max-width: 500px;
+      min-width: 93px;
+      width: var(--mv-tooltip-width);
       min-height: var(--mv-tooltip-height, 39px);
       box-shadow: 0 0px 25px 5px rgba(205,210,214,0.8);
       border-radius: 5px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
     }
     
     .mv-tooltip-container::after {
@@ -48,6 +61,9 @@ export class MvTooltip extends LitElement {
       width: 10px;
       background: var(--mv-tooltip-background, #363F4C);
       box-shadow: 0 0px 25px 5px rgba(205,210,214,0.8);
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
     }
     
     .tooltip-popup {
@@ -61,6 +77,9 @@ export class MvTooltip extends LitElement {
       box-sizing: border-box;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .mv-tooltip-container-bottom {
@@ -123,14 +142,14 @@ export class MvTooltip extends LitElement {
       font-weight: 500;
     }
 
-    .tooltip-actived .mv-tooltip-container {
+    .active .mv-tooltip-container {
       display: block;
     }
     
     mv-fa {
       position: absolute;
-      right: 0px;
-      top: -9px;
+      right: 5px;
+      top: 0;
       font-size: 15px;
       color:var(--mv-tooltip-color, #FFFFFF);
       cursor: pointer;
@@ -149,8 +168,17 @@ export class MvTooltip extends LitElement {
       cursor: pointer;
     }
     
+    .content ::slotted(*) { 
+      max-width: 500px;
+      overflow-wrap: break-word;
+      padding: 8px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+    }
+    
     .mv-tooltip-container.large {
-      width: 163px;
+      min-width: 163px;
       min-height: 46px;
     }
     
@@ -165,35 +193,37 @@ export class MvTooltip extends LitElement {
 
   constructor() {
     super();
-    this.position = 'bottom';
+    this.position = "bottom";
     this.open = false;
     this.theme = "dark";
     this.size = "small";
     this.title = null;
-    this.showCloseButton = false;
+    this.closeable = false;
   }
 
   render() {
-    const open = this.open ? 'tooltip tooltip-actived' : 'tooltip';
+    const open = this.open ? "tooltip active" : "tooltip";
     return html`
       <span class="${open}">
-        <div class="mv-tooltip-container mv-tooltip-container-${this.position} ${this.theme} ${this.size}">
-          <div class="tooltip-popup">
-          ${this.clickAble && this.showCloseButton
-            ? html`<mv-fa icon="window-close" @click="${this.hideTooltip}"></mv-fa>`
-            : html``}
-          ${this.title
-            ? html`<div class="tooltip-title">${this.title}</div>`
-            : html``}
-            <slot name="tooltip-content"></slot>
-          </div>
-        </div>
+        <span class="mv-tooltip-container mv-tooltip-container-${this.position} ${this.theme} ${this.size}">
+          <span class="tooltip-popup">
+            ${this.closeable && this.clickable
+              ? html`<slot name="close-button"><mv-fa icon="times" @click="${this.toggleTooltip}"></mv-fa></slot>`
+              : html``}
+            <div>
+                ${this.title
+                  ? html`<slot name="tilte"><div class="tooltip-title">${this.title}</div></slot>`
+                  : html``}
+                <span class="content"><slot name="tooltip-content"></slot></span>
+            </div>
+          </span>
+        </span>
         <span 
           class="tooltip-trigger"
           @mouseover="${this.showTooltip}"
-          @mouseout="${!this.clickAble ? this.hideTooltip : null}"
+          @mouseout="${this.hideTooltip}"
           @click="${this.toggleTooltip}"
-          >
+        >
           <slot></slot>
         </span>
       </span>
@@ -201,16 +231,16 @@ export class MvTooltip extends LitElement {
   }
 
   connectedCallback() {
-    document.addEventListener("click", this.handleClickTooltip);
+    document.addEventListener("click", this.handleClickAway);
     super.connectedCallback();
   }
 
   detachedCallback() {
-    document.removeEventListener("click", this.handleClickTooltip);
+    document.removeEventListener("click", this.handleClickAway);
     super.detachedCallback();
   }
 
-  handleClickTooltip = event => {
+  handleClickAway = event => {
     const { path } = event;
     const clickedTooltip = !(path || []).some(node => node === this);
     if (clickedTooltip) {
@@ -219,17 +249,19 @@ export class MvTooltip extends LitElement {
   };
 
   hideTooltip() {
-    this.open = false;
+    if (!this.clickable) {
+      this.open = false;
+    }
   }
 
   showTooltip() {
-    if (!this.clickAble) {
+    if (!this.clickable) {
       this.open = true;
     }
   }
 
   toggleTooltip() {
-    if (this.clickAble) {
+    if (this.clickable) {
       this.open = !this.open;
     }
   }

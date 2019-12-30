@@ -16,11 +16,6 @@ export class MvTooltipDemo extends LitElement {
         margin-top: 20px;
       } 
       
-      .mv-container_top {
-        display: flex;
-        justify-content: center;
-      }
-      
       .right-left-tooltip {
         display: grid;
         grid-template-columns: 50% 50%;
@@ -87,7 +82,7 @@ export class MvTooltipDemo extends LitElement {
             </mv-tooltip>
           </div>
           <div class="tooltip">
-            <mv-tooltip clickAble position="bottom">
+            <mv-tooltip clickable position="bottom">
               <a class="demo-tip">OnClick</a>
               <div slot="tooltip-content">Click</div>
             </mv-tooltip>
@@ -123,7 +118,7 @@ export class MvTooltipDemo extends LitElement {
             </mv-tooltip>
           </div>
           <div class="tooltip">
-            <mv-tooltip clickAble position="bottom" theme="light">
+            <mv-tooltip clickable position="bottom" theme="light">
               <a class="demo-tip">OnClick</a>
               <div slot="tooltip-content">Click</div>
             </mv-tooltip>
@@ -159,7 +154,7 @@ export class MvTooltipDemo extends LitElement {
             </mv-tooltip>
           </div>
           <div class="tooltip">
-            <mv-tooltip clickAble position="bottom" size="large">
+            <mv-tooltip clickable position="bottom" size="large">
               <a class="demo-tip">OnClick</a>
               <div slot="tooltip-content">Click</div>
             </mv-tooltip>
@@ -195,7 +190,7 @@ export class MvTooltipDemo extends LitElement {
             </mv-tooltip>
           </div>
           <div class="tooltip">
-            <mv-tooltip clickAble position="bottom" size="large" theme="light">
+            <mv-tooltip clickable position="bottom" size="large" theme="light">
               <a class="demo-tip">OnClick</a>
               <div slot="tooltip-content">Click</div>
             </mv-tooltip>
@@ -227,11 +222,13 @@ export class MvTooltipDemo extends LitElement {
           <div class="tooltip">
             <mv-tooltip position="bottom" class="custom" title="Bottom">
               <a class="demo-tip">Bottom</a>
-              <p slot="tooltip-content">Tooltips display informative text when users hover over, focus on, or tap an element.</p>
+              <p slot="tooltip-content">Tooltips display informative text when users hover over, focus on, or tap an element.
+               Tooltips display informative text when users hover over, focus on, or tap an element.
+               Tooltips display informative text when users hover over, focus on, or tap an element.</p>
             </mv-tooltip>
           </div>
           <div class="tooltip">
-            <mv-tooltip clickAble position="bottom" class="custom" title="Click" showCloseButton>
+            <mv-tooltip clickable position="bottom" class="custom" title="Click" closeable>
               <a class="demo-tip">OnClick</a>
               <p slot="tooltip-content">Tooltips display informative text when users hover over, focus on, or tap an element.</p>
             </mv-tooltip>
