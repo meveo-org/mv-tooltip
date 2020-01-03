@@ -10,7 +10,7 @@ export class MvTooltip extends LitElement {
       //  valid position values are: "top", "right, "left"
       //    default: "bottom"
       position: { type: String },
-      clickable : { type: Boolean },
+      clickable: { type: Boolean },
       open: { type: Boolean },
 
       //  valid theme values are: "light"
@@ -203,16 +203,26 @@ export class MvTooltip extends LitElement {
 
   render() {
     const open = this.open ? "tooltip active" : "tooltip";
+    const tooltipPosition = `mv-tooltip-container-${this.position}`;
+    const tooltipClass = `${tooltipPosition} ${this.theme} ${this.size}`;
     return html`
       <span class="${open}">
-        <span class="mv-tooltip-container mv-tooltip-container-${this.position} ${this.theme} ${this.size}">
+        <span class="mv-tooltip-container ${tooltipClass}">
           <span class="tooltip-popup">
             ${this.closeable && this.clickable
-              ? html`<slot name="close-button"><mv-fa icon="times" @click="${this.toggleTooltip}"></mv-fa></slot>`
+              ? html`
+                  <slot name="close-button">
+                    <mv-fa icon="times" @click="${this.toggleTooltip}"></mv-fa>
+                  </slot>
+                `
               : html``}
             <div>
                 ${this.title
-                  ? html`<slot name="tilte"><div class="tooltip-title">${this.title}</div></slot>`
+                  ? html`
+                      <slot name="title">
+                        <div class="tooltip-title">${this.title}</div>
+                      </slot>
+                    `
                   : html``}
                 <span class="content"><slot name="tooltip-content"></slot></span>
             </div>
