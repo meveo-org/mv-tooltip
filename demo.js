@@ -222,9 +222,7 @@ export class MvTooltipDemo extends LitElement {
           <div class="tooltip">
             <mv-tooltip position="bottom" class="custom" title="Bottom">
               <a class="demo-tip">Bottom</a>
-              <p slot="tooltip-content">Tooltips display informative text when users hover over, focus on, or tap an element.
-               Tooltips display informative text when users hover over, focus on, or tap an element.
-               Tooltips display informative text when users hover over, focus on, or tap an element.</p>
+              <p slot="tooltip-content">Tooltips display informative text when users hover over, focus on, or tap an element.</p>
             </mv-tooltip>
           </div>
           <div class="tooltip">

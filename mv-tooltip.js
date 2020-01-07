@@ -26,8 +26,14 @@ export class MvTooltip extends LitElement {
 
   static styles = css`
     :host {
-      font-family: var(--font-family, Arial);
-      font-size: var(--font-size-m, 10pt);
+      --mv-tooltip-font-family: var(--font-family, Arial);
+      --mv-tooltip-content-font-size: var(--font-size-m, 10pt);
+      --mv-tooltip-title-font-size: var(--font-size-xl, 12pt);
+      --mv-close-button-font-size: var(--font-size-l, 11pt);
+      --min-height: var(--mv-tooltip-height, 39px);
+      --background-color: var(--mv-tooltip-background, #363F4C);
+      --text-color: var(--mv-tooltip-color, #FFFFFF);
+      --border-radius: var(--mv-tooltip-border-radius, 5px);
     }
       
     .tooltip {
@@ -45,9 +51,9 @@ export class MvTooltip extends LitElement {
       max-width: 500px;
       min-width: 93px;
       width: var(--mv-tooltip-width);
-      min-height: var(--mv-tooltip-height, 39px);
+      min-height: var(--min-height);
       box-shadow: 0 0px 25px 5px rgba(205,210,214,0.8);
-      border-radius: 5px;
+      border-radius: var(--border-radius);
       box-sizing: border-box;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
@@ -59,7 +65,7 @@ export class MvTooltip extends LitElement {
       position: absolute;
       transform: rotate(45deg);
       width: 10px;
-      background: var(--mv-tooltip-background, #363F4C);
+      background: var(--background-color);
       box-shadow: 0 0px 25px 5px rgba(205,210,214,0.8);
       box-sizing: border-box;
       -moz-box-sizing: border-box;
@@ -70,10 +76,10 @@ export class MvTooltip extends LitElement {
       text-align: center;
       position: relative;
       z-index: 2;
-      border-radius: 5px;
-      background: var(--mv-tooltip-background, #363F4C);
-      color:var(--mv-tooltip-color, #FFFFFF);
-      min-height: var(--mv-tooltip-height, 39px);
+      border-radius: var(--border-radius);
+      background: var(--background-color);
+      color: var(--text-color);
+      min-height: var(--min-height);
       box-sizing: border-box;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
@@ -137,8 +143,9 @@ export class MvTooltip extends LitElement {
     }
 
     .tooltip-title {
-      font-size: var(--mv-tooltip-title-font-size, 20px);
-      color:var(--mv-tooltip-color, #FFFFFF);
+      font-family: var(--mv-tooltip-font-family);
+      font-size: var(--mv-tooltip-title-font-size);
+      color:var(--text-color);
       font-weight: 500;
     }
 
@@ -150,8 +157,8 @@ export class MvTooltip extends LitElement {
       position: absolute;
       right: 5px;
       top: 0;
-      font-size: 15px;
-      color:var(--mv-tooltip-color, #FFFFFF);
+      font-size: var(--mv-close-button-font-size);
+      color: var(--text-color);
       cursor: pointer;
     }
     
@@ -161,7 +168,7 @@ export class MvTooltip extends LitElement {
     
     .mv-tooltip-container.light > .tooltip-popup {
       background: #FFFFFF;
-      color:#363F4C;
+      color: #363F4C;
     }
     
     span > ::slotted(*) { 
@@ -175,6 +182,8 @@ export class MvTooltip extends LitElement {
       box-sizing: border-box;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
+      font-family: var(--mv-tooltip-font-family);
+      font-size: var(--mv-tooltip-content-font-size);
     }
     
     .mv-tooltip-container.large {
@@ -187,7 +196,7 @@ export class MvTooltip extends LitElement {
     }
     
     .mv-tooltip-container.light mv-fa {
-      color:#363F4C;
+      color: #363F4C;
     }
  `;
 
