@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit-element";
 import "mv-font-awesome";
-import "mv-container";
+import "mv-click-away";
 
 export class MvTooltip extends LitElement {
   static get properties() {
@@ -215,56 +215,44 @@ export class MvTooltip extends LitElement {
     const tooltipPosition = `mv-tooltip-container-${this.position}`;
     const tooltipClass = `${tooltipPosition} ${this.theme} ${this.size}`;
     return html`
-      <span class="${open}">
-        <span class="mv-tooltip-container ${tooltipClass}">
-          <span class="tooltip-popup">
-            ${this.closeable && this.clickable
-              ? html`
-                  <slot name="close-button">
-                    <mv-fa icon="times" @click="${this.toggleTooltip}"></mv-fa>
-                  </slot>
-                `
-              : html``}
-            <div>
-                ${this.title
-                  ? html`
-                      <slot name="title">
-                        <div class="tooltip-title">${this.title}</div>
-                      </slot>
-                    `
-                  : html``}
-                <span class="content"><slot name="tooltip-content"></slot></span>
-            </div>
+      <mv-click-away @clicked-away="${this.handleClickAway}">
+        <span class="${open}">
+          <span class="mv-tooltip-container ${tooltipClass}">
+            <span class="tooltip-popup">
+              ${this.closeable && this.clickable
+                ? html`
+                    <slot name="close-button">
+                      <mv-fa icon="times" @click="${this.toggleTooltip}"></mv-fa>
+                    </slot>
+                  `
+                : html``}
+              <div>
+                  ${this.title
+                    ? html`
+                        <slot name="title">
+                          <div class="tooltip-title">${this.title}</div>
+                        </slot>
+                      `
+                    : html``}
+                  <span class="content"><slot name="tooltip-content"></slot></span>
+              </div>
+            </span>
+          </span>
+          <span 
+            class="tooltip-trigger"
+            @mouseover="${this.showTooltip}"
+            @mouseout="${this.hideTooltip}"
+            @click="${this.toggleTooltip}"
+          >
+            <slot></slot>
           </span>
         </span>
-        <span 
-          class="tooltip-trigger"
-          @mouseover="${this.showTooltip}"
-          @mouseout="${this.hideTooltip}"
-          @click="${this.toggleTooltip}"
-        >
-          <slot></slot>
-        </span>
-      </span>
+      </mv-click-away>
     `;
   }
 
-  connectedCallback() {
-    document.addEventListener("click", this.handleClickAway);
-    super.connectedCallback();
-  }
-
-  detachedCallback() {
-    document.removeEventListener("click", this.handleClickAway);
-    super.detachedCallback();
-  }
-
-  handleClickAway = event => {
-    const { path } = event;
-    const clickedTooltip = !(path || []).some(node => node === this);
-    if (clickedTooltip) {
-      this.open = false;
-    }
+  handleClickAway = () => {
+    this.open = false;
   };
 
   hideTooltip() {
