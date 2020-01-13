@@ -9,8 +9,8 @@ MvTooltip is a Meveo component (based on lit-element) that renders a small pop-u
 
 ## Dependencies
 
-- [mv-click-away](https://github.com/meveo-frontend/mv-click-away)
-- [mv-font-awesome](https://github.com/meveo-frontend/mv-font-awesome)
+- [mv-click-away](https://github.com/meveo-org/mv-click-away)
+- [mv-font-awesome](https://github.com/meveo-org/mv-font-awesome)
 
 ## Quick Start
 
@@ -23,4 +23,4 @@ To experiment with the MvTooltip component.
 3. Update the code in the demo.js file
 
 
-You can also check this [demo](https://manaty.net/mv-tooltip/)
+You can also check this [demo](https://tooltip.meveo.org/)
