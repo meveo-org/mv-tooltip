@@ -31,9 +31,11 @@ export class MvTooltip extends LitElement {
       --mv-tooltip-title-font-size: var(--font-size-xl, 12pt);
       --mv-close-button-font-size: var(--font-size-l, 11pt);
       --min-height: var(--mv-tooltip-height, 39px);
+      --border-radius: var(--mv-tooltip-border-radius, 5px);
       --background-color: var(--mv-tooltip-background, #363F4C);
       --text-color: var(--mv-tooltip-color, #FFFFFF);
-      --border-radius: var(--mv-tooltip-border-radius, 5px);
+      --light-background: var(--mv-tooltip-light-background);
+      --light-color: var(--mv-tooltip-light-color);
     }
       
     .tooltip {
@@ -163,12 +165,12 @@ export class MvTooltip extends LitElement {
     }
     
     .mv-tooltip-container.light::after {
-      background: #FFFFFF;
+      background: var(--light-background, #FFFFFF);
     }
     
     .mv-tooltip-container.light > .tooltip-popup {
-      background: #FFFFFF;
-      color: #363F4C;
+      background: var(--light-background, #FFFFFF);
+      color: var(--light-color, #363F4C);
     }
     
     span > ::slotted(*) { 
