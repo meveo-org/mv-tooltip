@@ -6,12 +6,14 @@ export class MvTooltip extends LitElement {
   static get properties() {
     return {
       title: { type: String },
+      clickable: { type: Boolean },
+      open: { type: Boolean },
+      closeable: { type: Boolean },
+      noAutoClose: { type: Boolean, attribute: "no-auto-close", reflect: true },
 
       //  valid position values are: "top", "right, "left"
       //    default: "bottom"
       position: { type: String },
-      clickable: { type: Boolean },
-      open: { type: Boolean },
 
       //  valid theme values are: "light"
       //    default: "dark"
@@ -19,9 +21,7 @@ export class MvTooltip extends LitElement {
 
       //  valid size values are: "large"
       //    default: "small"
-      size: { type: String, attribute: true },
-      closeable: { type: Boolean },
-      disableClickAway: { type: Boolean }
+      size: { type: String, attribute: true }
     };
   }
 
@@ -34,21 +34,21 @@ export class MvTooltip extends LitElement {
         --mv-close-button-font-size: var(--font-size-l, 11pt);
         --min-height: var(--mv-tooltip-height, 39px);
         --border-radius: var(--mv-tooltip-border-radius, 5px);
-        --background-color: var(--mv-tooltip-background, #363F4C);
-        --text-color: var(--mv-tooltip-color, #FFFFFF);
+        --background-color: var(--mv-tooltip-background, #363f4c);
+        --text-color: var(--mv-tooltip-color, #ffffff);
         --light-background: var(--mv-tooltip-light-background);
         --light-color: var(--mv-tooltip-light-color);
         --border: 1px solid var(--mv-tooltip-border);
       }
-        
+
       .tooltip {
         position: relative;
         z-index: unset;
         display: inline-block;
       }
-  
+
       .mv-tooltip-container {
-        color: #FFFFFF;
+        color: #ffffff;
         display: none;
         position: absolute;
         z-index: 9999;
@@ -57,7 +57,7 @@ export class MvTooltip extends LitElement {
         min-width: var(--mv-tooltip-min-width, 93px);
         width: var(--mv-tooltip-width);
         min-height: var(--min-height);
-        box-shadow: 0 0px 25px 5px rgba(205,210,214,0.8);
+        box-shadow: 0 0px 25px 5px rgba(205, 210, 214, 0.8);
         border-radius: var(--border-radius);
         box-sizing: border-box;
         -moz-box-sizing: border-box;
@@ -65,7 +65,7 @@ export class MvTooltip extends LitElement {
         width: max-content;
         border: var(--border);
       }
-      
+
       .mv-tooltip-container::after {
         content: "";
         height: 10px;
@@ -73,13 +73,13 @@ export class MvTooltip extends LitElement {
         transform: rotate(45deg);
         width: 10px;
         background: var(--background-color);
-        box-shadow: 0 0px 25px 5px rgba(205,210,214,0.8);
+        box-shadow: 0 0px 25px 5px rgba(205, 210, 214, 0.8);
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         border: var(--border);
       }
-      
+
       .tooltip-popup {
         text-align: center;
         position: relative;
@@ -95,72 +95,72 @@ export class MvTooltip extends LitElement {
         align-items: center;
         justify-content: center;
       }
-      
+
       .mv-tooltip-container-bottom {
         top: calc(100% + 16px);
         left: 50%;
         transform: translateX(-50%);
       }
-  
+
       .mv-tooltip-container-bottom::after {
         top: -5px;
         left: 50%;
         margin-left: -5px;
       }
-  
+
       .mv-tooltip-container-top {
         bottom: calc(100% + 16px);
         left: 50%;
         transform: translateX(-50%);
       }
-  
+
       .mv-tooltip-container-top::after {
         bottom: -5px;
         left: 50%;
         margin-left: -5px;
       }
-  
+
       .mv-tooltip-container-left {
         right: calc(100% + 24px);
         top: 50%;
         transform: translateY(-50%);
       }
-  
+
       .mv-tooltip-container-left::after {
         right: -5px;
         margin-top: -5px;
         top: 50%;
       }
-  
+
       .mv-tooltip-container-right {
         left: calc(100% + 24px);
         top: 50%;
         transform: translateY(-50%);
       }
-  
+
       .mv-tooltip-container-right::after {
         left: -5px;
         margin-top: -5px;
         top: 50%;
       }
-  
+
       .tooltip-trigger {
         display: inline-block;
         position: relative;
         z-index: 1;
       }
-  
+
       .tooltip-title {
         font-family: var(--mv-tooltip-font-family);
         font-size: var(--mv-tooltip-title-font-size);
-        color:var(--text-color);
+        color: var(--text-color);
         font-weight: 500;
       }
-  
+
       .active .mv-tooltip-container {
         display: block;
       }
-      
+
       mv-fa {
         position: absolute;
         right: 5px;
@@ -169,21 +169,21 @@ export class MvTooltip extends LitElement {
         color: var(--text-color);
         cursor: pointer;
       }
-      
+
       .mv-tooltip-container.light::after {
-        background: var(--light-background, #FFFFFF);
+        background: var(--light-background, #ffffff);
       }
-      
+
       .mv-tooltip-container.light > .tooltip-popup {
-        background: var(--light-background, #FFFFFF);
-        color: var(--light-color, #363F4C);
+        background: var(--light-background, #ffffff);
+        color: var(--light-color, #363f4c);
       }
-      
-      span > ::slotted(*) { 
+
+      span > ::slotted(*) {
         cursor: pointer;
       }
-      
-      .content ::slotted(*) { 
+
+      .content ::slotted(*) {
         max-width: 500px;
         overflow-wrap: break-word;
         padding: 8px;
@@ -193,20 +193,20 @@ export class MvTooltip extends LitElement {
         font-family: var(--mv-tooltip-font-family);
         font-size: var(--mv-tooltip-content-font-size);
       }
-      
+
       .mv-tooltip-container.large {
         min-width: 163px;
         min-height: 46px;
       }
-      
+
       .mv-tooltip-container.large > .tooltip-popup {
         min-height: 46px;
       }
-      
+
       .mv-tooltip-container.light mv-fa {
-        color: #363F4C;
+        color: #363f4c;
       }
-   `;
+    `;
   }
 
   constructor() {
@@ -217,7 +217,7 @@ export class MvTooltip extends LitElement {
     this.size = "small";
     this.title = null;
     this.closeable = false;
-    this.disableClickAway = false;
+    this.noAutoClose = false;
   }
 
   render() {
@@ -232,23 +232,28 @@ export class MvTooltip extends LitElement {
               ${this.closeable && this.clickable
                 ? html`
                     <slot name="close-button">
-                      <mv-fa icon="times" @click="${this.toggleTooltip}"></mv-fa>
+                      <mv-fa
+                        icon="times"
+                        @click="${this.toggleTooltip}"
+                      ></mv-fa>
                     </slot>
                   `
                 : html``}
               <div>
-                  ${this.title
-                    ? html`
-                        <slot name="title">
-                          <div class="tooltip-title">${this.title}</div>
-                        </slot>
-                      `
-                    : html``}
-                  <span class="content"><slot name="tooltip-content"></slot></span>
+                ${this.title
+                  ? html`
+                      <slot name="title">
+                        <div class="tooltip-title">${this.title}</div>
+                      </slot>
+                    `
+                  : html``}
+                <span class="content"
+                  ><slot name="tooltip-content"></slot
+                ></span>
               </div>
             </span>
           </span>
-          <span 
+          <span
             class="tooltip-trigger"
             @mouseover="${this.showTooltip}"
             @mouseout="${this.hideTooltip}"
@@ -261,27 +266,35 @@ export class MvTooltip extends LitElement {
     `;
   }
 
+  dispatchToggleEvent = open => {
+    this.dispatchEvent(new CustomEvent("tooltip-toggle", { detail: { open } }));
+  };
+
   handleClickAway = () => {
-    if (!this.disableClickAway) {
+    if (!this.noAutoClose) {
       this.open = false;
+      this.dispatchToggleEvent(this.open);
     }
   };
 
   hideTooltip() {
     if (!this.clickable) {
       this.open = false;
+      this.dispatchToggleEvent(this.open);
     }
   }
 
   showTooltip() {
     if (!this.clickable) {
       this.open = true;
+      this.dispatchToggleEvent(this.open);
     }
   }
 
   toggleTooltip() {
     if (this.clickable) {
       this.open = !this.open;
+      this.dispatchToggleEvent(this.open);
     }
   }
 }

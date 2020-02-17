@@ -226,7 +226,7 @@ export class MvTooltipDemo extends LitElement {
             </mv-tooltip>
           </div>
           <div class="tooltip">
-            <mv-tooltip clickable position="bottom" class="custom" title="Click" closeable>
+            <mv-tooltip clickable position="bottom" class="custom" title="Click" closeable no-auto-close>
               <a class="demo-tip">OnClick</a>
               <p slot="tooltip-content">Tooltips display informative text when users hover over, focus on, or tap an element.</p>
             </mv-tooltip>
