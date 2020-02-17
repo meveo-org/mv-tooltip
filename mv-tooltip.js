@@ -41,6 +41,16 @@ export class MvTooltip extends LitElement {
         --border: 1px solid var(--mv-tooltip-border);
       }
 
+      @-webkit-keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
+      }
+
+      @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity:1 ;}
+      }
+
       .tooltip {
         position: relative;
         z-index: unset;
@@ -49,8 +59,8 @@ export class MvTooltip extends LitElement {
 
       .mv-tooltip-container {
         color: #ffffff;
-        display: none;
         position: absolute;
+        visibility: hidden;
         z-index: 9999;
         cursor: context-menu;
         max-width: var(--mv-tooltip-width, 500px);
@@ -158,7 +168,9 @@ export class MvTooltip extends LitElement {
       }
 
       .active .mv-tooltip-container {
-        display: block;
+        visibility: visible;
+        -webkit-animation: fadeIn 0.3s;
+        animation: fadeIn 0.3s;
       }
 
       mv-fa {
@@ -222,12 +234,12 @@ export class MvTooltip extends LitElement {
   }
 
   render() {
-    const open = this.open ? "tooltip active" : "tooltip";
+    const activeClass = this.open ? " active": "";
     const tooltipPosition = `mv-tooltip-container-${this.position}`;
     const tooltipClass = `${tooltipPosition} ${this.theme} ${this.size}`;
     return html`
       <mv-click-away @clicked-away="${this.handleClickAway}">
-        <span class="${open}">
+        <span class="${`tooltip${activeClass}`}">
           <span class="mv-tooltip-container ${tooltipClass}">
             <span class="tooltip-popup">
               ${this.closeable && this.clickable
