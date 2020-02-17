@@ -32,7 +32,7 @@ export class MvTooltip extends LitElement {
         --mv-tooltip-content-font-size: var(--font-size-m, 10pt);
         --mv-tooltip-title-font-size: var(--font-size-xl, 12pt);
         --mv-close-button-font-size: var(--font-size-l, 11pt);
-        --min-height: var(--mv-tooltip-height, 39px);
+        --min-height: var(--mv-tooltip-height, 29px);
         --border-radius: var(--mv-tooltip-border-radius, 5px);
         --background-color: var(--mv-tooltip-background, #363f4c);
         --text-color: var(--mv-tooltip-color, #ffffff);
