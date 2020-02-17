@@ -28,10 +28,10 @@ export class MvTooltip extends LitElement {
   static get styles() {
     return css`
       :host {
-        --mv-tooltip-font-family: var(--font-family, Arial);
-        --mv-tooltip-content-font-size: var(--font-size-m, 10pt);
-        --mv-tooltip-title-font-size: var(--font-size-xl, 12pt);
-        --mv-close-button-font-size: var(--font-size-l, 11pt);
+        --mv-tooltip-font-family: var(--font-family, MuseoSans);
+        --mv-tooltip-content-font-size: var(--font-size-xs, 0.8125rem);
+        --mv-tooltip-title-font-size: var(--font-size-l, 1.125rem);
+        --mv-close-button-font-size: var(--font-size-l, 1.125rem);
         --min-height: var(--mv-tooltip-height, 29px);
         --border-radius: var(--mv-tooltip-border-radius, 5px);
         --background-color: var(--mv-tooltip-background, #363f4c);
@@ -185,13 +185,14 @@ export class MvTooltip extends LitElement {
 
       .content ::slotted(*) {
         max-width: 500px;
-        overflow-wrap: break-word;
+        overflow-wrap: break-word;        
         padding: 8px;
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         font-family: var(--mv-tooltip-font-family);
         font-size: var(--mv-tooltip-content-font-size);
+        font-weight: 100;
       }
 
       .mv-tooltip-container.large {
