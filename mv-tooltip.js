@@ -29,7 +29,7 @@ export class MvTooltip extends LitElement {
     return css`
       :host {
         --mv-tooltip-font-family: var(--font-family, MuseoSans);
-        --mv-tooltip-content-font-size: var(--font-size-xs, 0.8125rem);
+        --mv-tooltip-content-font-size: var(--font-size-m, 0.8125rem);
         --mv-tooltip-title-font-size: var(--font-size-l, 1.125rem);
         --mv-close-button-font-size: var(--font-size-l, 1.125rem);
         --min-height: var(--mv-tooltip-height, 29px);

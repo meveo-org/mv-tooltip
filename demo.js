@@ -4,6 +4,12 @@ import "mv-font-awesome";
 import "mv-container";
 
 export class MvTooltipDemo extends LitElement {
+  static get properties() {
+    return {
+      theme: { type: String, attribute: true }
+    };
+  }
+
   static get styles() {
     return css`
       :host {
@@ -48,41 +54,72 @@ export class MvTooltipDemo extends LitElement {
       .demo-tip {
         text-transform: uppercase;
       }
+      
+      fieldset > label, label > input {
+        cursor: pointer;
+      }
+      
+      fieldset {
+        width: 120px;
+        margin-left: 10px;
+        border:2px solid red;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;	
+        border-radius: 8px;
+        color: #818181;
+        margin-bottom: 20px;
+      }
+      
+      legend {
+        font-weight: 500;
+        color: red;
+      }
    `;
   }
 
+  constructor() {
+    super();
+    this.theme = "light";
+  }
+
   render() {
+    const { theme } = this;
     return html`
     <div>
       <div class="container">
-        <mv-container>
-          <h3>Small-Dark</h3>
+        <fieldset>
+          <legend>Theme</legend>
+          <label><input type="radio" name="theme" value="light" checked @change="${this.changeTheme}" />Light</label>
+          <label><input type="radio" name="theme" value="dark" @change="${this.changeTheme}" />Dark</label>
+        </fieldset>
+        <mv-container .theme="${theme}">
+          <h3>Small</h3>
           <div class="tooltip">
-            <mv-tooltip position="top">
+            <mv-tooltip position="top" .theme="${theme}">
               <a class="demo-tip">Top</a>
               <div slot="tooltip-content">Top</div>
             </mv-tooltip>
           </div>
           
           <div class="right-left-tooltip">
-            <mv-tooltip position="left">
+            <mv-tooltip position="left" .theme="${theme}">
               <a class="demo-tip">Left</a>
               <div slot="tooltip-content">Left</div>
             </mv-tooltip>
-            <mv-tooltip position="right">
+            <mv-tooltip position="right" .theme="${theme}">
               <a class="demo-tip">Right</a>
               <div slot="tooltip-content">Right</div>
             </mv-tooltip>
           </div>
           
           <div class="tooltip">
-            <mv-tooltip position="bottom">
+            <mv-tooltip position="bottom" .theme="${theme}">
               <a class="demo-tip">Bottom</a>
               <div slot="tooltip-content">Bottom</div>
             </mv-tooltip>
           </div>
           <div class="tooltip">
-            <mv-tooltip clickable position="bottom">
+            <mv-tooltip clickable position="bottom" .theme="${theme}">
               <a class="demo-tip">OnClick</a>
               <div slot="tooltip-content">Click</div>
             </mv-tooltip>
@@ -91,70 +128,34 @@ export class MvTooltipDemo extends LitElement {
       </div>
       
       <div class="container">
-        <mv-container>
-          <h3>Small-Light</h3>
+        <mv-container .theme="${theme}">
+          <h3>Large</h3>
           <div class="tooltip">
-            <mv-tooltip position="top" theme="light">
-              <a class="demo-tip">Top</a>
-              <div slot="tooltip-content">Top</div>
-            </mv-tooltip>
-          </div>
-          
-          <div class="right-left-tooltip">
-            <mv-tooltip position="left" theme="light">
-              <a class="demo-tip">Left</a>
-              <div slot="tooltip-content">Left</div>
-            </mv-tooltip>
-            <mv-tooltip position="right" theme="light">
-              <a class="demo-tip">Right</a>
-              <div slot="tooltip-content">Right</div>
-            </mv-tooltip>
-          </div>
-          
-          <div class="tooltip">
-            <mv-tooltip position="bottom" theme="light">
-              <a class="demo-tip">Bottom</a>
-              <div slot="tooltip-content">Bottom</div>
-            </mv-tooltip>
-          </div>
-          <div class="tooltip">
-            <mv-tooltip clickable position="bottom" theme="light">
-              <a class="demo-tip">OnClick</a>
-              <div slot="tooltip-content">Click</div>
-            </mv-tooltip>
-          </div>
-        </mv-container>
-      </div>
-      
-      <div class="container">
-        <mv-container>
-          <h3>Large-Dark</h3>
-          <div class="tooltip">
-            <mv-tooltip position="top" size="large">
+            <mv-tooltip position="top" size="large" .theme="${theme}">
               <a class="demo-tip">Top</a>
               <div slot="tooltip-content">Top</div>
             </mv-tooltip>
           </div>
           
           <div class="right-left-tooltip" size="large">
-            <mv-tooltip position="left" size="large">
+            <mv-tooltip position="left" size="large" .theme="${theme}">
               <a class="demo-tip">Left</a>
               <div slot="tooltip-content">Left</div>
             </mv-tooltip>
-            <mv-tooltip position="right" size="large">
+            <mv-tooltip position="right" size="large" .theme="${theme}">
               <a class="demo-tip">Right</a>
               <div slot="tooltip-content">Right</div>
             </mv-tooltip>
           </div>
           
           <div class="tooltip">
-            <mv-tooltip position="bottom" size="large">
+            <mv-tooltip position="bottom" size="large" .theme="${theme}">
               <a class="demo-tip">Bottom</a>
               <div slot="tooltip-content">Bottom</div>
             </mv-tooltip>
           </div>
           <div class="tooltip">
-            <mv-tooltip clickable position="bottom" size="large">
+            <mv-tooltip clickable position="bottom" size="large" .theme="${theme}">
               <a class="demo-tip">OnClick</a>
               <div slot="tooltip-content">Click</div>
             </mv-tooltip>
@@ -163,43 +164,7 @@ export class MvTooltipDemo extends LitElement {
       </div>
       
       <div class="container">
-        <mv-container>
-          <h3>Large-Light</h3>
-          <div class="tooltip">
-            <mv-tooltip position="top" size="large" theme="light">
-              <a class="demo-tip">Top</a>
-              <div slot="tooltip-content">Top</div>
-            </mv-tooltip>
-          </div>
-          
-          <div class="right-left-tooltip">
-            <mv-tooltip position="left" size="large" theme="light">
-              <a class="demo-tip">Left</a>
-              <div slot="tooltip-content">Left</div>
-            </mv-tooltip>
-            <mv-tooltip position="right" size="large" theme="light">
-              <a class="demo-tip">Right</a>
-              <div slot="tooltip-content">Right</div>
-            </mv-tooltip>
-          </div>
-          
-          <div class="tooltip">
-            <mv-tooltip position="bottom" size="large" theme="light">
-              <a class="demo-tip">Bottom</a>
-              <div slot="tooltip-content">Bottom</div>
-            </mv-tooltip>
-          </div>
-          <div class="tooltip">
-            <mv-tooltip clickable position="bottom" size="large" theme="light">
-              <a class="demo-tip">OnClick</a>
-              <div slot="tooltip-content">Click</div>
-            </mv-tooltip>
-          </div>
-        </mv-container>
-      </div>
-      
-      <div class="container">
-        <mv-container>
+        <mv-container .theme="${theme}">
           <h3>Custom size and color</h3>
           <div class="tooltip">
             <mv-tooltip position="top" class="custom" title="Top">
@@ -236,6 +201,11 @@ export class MvTooltipDemo extends LitElement {
     </div>
     `;
   }
+
+  changeTheme = originalEvent => {
+    const { target: { value } } = originalEvent;
+    this.theme = value;
+  };
 }
 
 customElements.define("mv-tooltip-demo", MvTooltipDemo);
