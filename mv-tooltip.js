@@ -55,6 +55,7 @@ export class MvTooltip extends LitElement {
         position: relative;
         z-index: unset;
         display: inline-block;
+        width: var(--mv-tooltip-trigger-width, 100%);
       }
 
       .mv-tooltip-container {
@@ -158,6 +159,7 @@ export class MvTooltip extends LitElement {
         display: inline-block;
         position: relative;
         z-index: 1;
+        width: var(--mv-tooltip-trigger-width, 100%);
       }
 
       .tooltip-title {
