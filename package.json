@@ -1,0 +1,26 @@
+{
+  "name": "@meveo-org/mv-tooltip",
+  "version": "1.0.0",
+  "description": "MvTooltip is a Meveo component (based on lit-element) that renders a small pop-up box.",
+  "main": "mv-tooltip.js",
+  "scripts": {
+    "serve": "es-dev-server --node-resolve --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meveo-org/mv-tooltip.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meveo-org/mv-tooltip/issues"
+  },
+  "homepage": "https://github.com/meveo-org/mv-tooltip#readme",
+  "dependencies": {
+    "@meveo-org/mv-font-awesome": "^1.0.0",
+    "@meveo-org/mv-click-away": "^1.0.0"
+  },
+  "devDependencies": {
+    "es-dev-server": "^1.46.1"
+  }
+}

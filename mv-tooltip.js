@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit-element";
-import "mv-font-awesome";
-import "mv-click-away";
+import "@meveo-org/mv-font-awesome";
+import "@meveo-org/mv-click-away";
 
 export class MvTooltip extends LitElement {
   static get properties() {
