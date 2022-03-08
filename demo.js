@@ -1,7 +1,7 @@
-import { LitElement, html, css } from "lit-element";
+import { LitElement, html, css } from "lit";
+import "@meveo-org/mv-font-awesome";
+import "@meveo-org/mv-container";
 import "./mv-tooltip.js";
-import "mv-font-awesome";
-import "mv-container";
 
 export class MvTooltipDemo extends LitElement {
   static get properties() {
